@@ -1,8 +1,14 @@
-const http = require('http');
+require('dotenv').config();
+const cors = require('cors');
+const express = require('express');
+const app = express();
 
-http.createServer(function (req, res) {
-    res.write('hello');
-    res.end();
-}).listen(3000, function() {
-    console.log("server start at port 3000");
+app.use(cors());
+
+app.get('/', (req, res) => {
+    res.send('Hello!');
+});
+
+app.listen(process.env.PORT, () => {
+    console.log(`listening on port ${process.env.PORT}`);
 });
