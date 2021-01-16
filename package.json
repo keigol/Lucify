@@ -1,0 +1,23 @@
+{
+  "name": "dream-journal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keigol/Dream-Journal.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/keigol/Dream-Journal/issues"
+  },
+  "homepage": "https://github.com/keigol/Dream-Journal#readme"
+}
