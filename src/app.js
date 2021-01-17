@@ -69,9 +69,7 @@ app.post('/api/:vfid/init', async (req, res) => {
 
 connectDb()
     .then(async () => {
-        app.listen(getPort(), () => {
-            console.log(`listening on port ${process.env.PORT}`);
-        });
+        app.listen(getPort());
     })
     .catch(console.error);
 
