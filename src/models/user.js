@@ -2,15 +2,20 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema(
     {
-        username: {
-            type: String,
-            required: true
-        },
         vfid: {
             type: Number,
             unique: true,
             required: true
-        }
+        },
+        dreams: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'DreamEntry'
+        }],
+
+        hobbies: String,
+        goals: String,
+        passion: String,
+        inspiration: String
     },
     {
         timestamps: true

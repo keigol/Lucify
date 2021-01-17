@@ -18,17 +18,19 @@ app.use( async (req, res, next) => {
 })
 
 app.get('/api/:userId', async (req, res) => {
-    const user = await req.context.models.User.findById(req.context.me.id);
-    return res.send(user);
+    // const user = await req.context.models.User.findById(req.context.me.id);
+    return res.send(req.context.me);
 });
 
 app.post('/api/:userId', async (req, res) => {
-    const message = {
-        text: req.body.text,
-        userId: req.context.me.id,
-    };
+    let user = req.context.me;
+    var dreamEntry = new models.DreamEntry({description: 'I had a dream'});
+    dreamEntry.save(function(err) {
+        user.dreams.push(dreamEntry);
+        user.save(function(err) {console.error});
+    })
 
-    return res.send(message);
+    return res.send();
 })
 
 
