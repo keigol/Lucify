@@ -15,6 +15,4 @@ const dreamEntrySchema = new mongoose.Schema(
     }
 )
 
-const DreamEntry = mongoose.model('DreamEntry', dreamEntrySchema);
-
-module.exports.DreamEntry = DreamEntry;
+module.exports = mongoose.model('DreamEntry', dreamEntrySchema);

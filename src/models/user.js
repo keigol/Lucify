@@ -4,6 +4,10 @@ const userSchema = new mongoose.Schema(
     {
         username: {
             type: String,
+            required: true
+        },
+        vfid: {
+            type: Number,
             unique: true,
             required: true
         }
@@ -11,12 +15,17 @@ const userSchema = new mongoose.Schema(
     {
         timestamps: true
     }
-)
+);
 
-userSchema.pre('remove', function(next) {
-    this.model('DreamEntry').deleteMany({user: this._id}, next);
-})
+userSchema.statics.findByVoiceflowId = async function (id) {
+    let user = await this.findOne({
+        vfid: id
+    });
+    return user;
+};
 
-const User = mongoose.model('User', userSchema);
+userSchema.pre('remove', function (next) {
+    this.model('DreamEntry').deleteMany({ user: this._id }, next);
+});
 
-module.exports.User = User;
+module.exports = mongoose.model('User', userSchema);
