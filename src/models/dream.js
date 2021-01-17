@@ -7,7 +7,7 @@ const dreamSchema = new mongoose.Schema(
             required: true
         },
         characters: [String],
-        place: [places]
+        places: [places]
     },
     {
         timestamps: true
