@@ -34,7 +34,7 @@ app.use('/api/:vfid', async (req, res, next) => {
 
 // return dreams
 app.get('/api/:vfid', async (req, res) => {
-    models.User.findOne({_id: req.context.me.id})
+    models.User.findOne({ _id: req.context.me.id })
         .populate('dreams')
         .then(user => {
             res.json(user);
@@ -62,15 +62,24 @@ app.post('/api/:vfid/init', async (req, res) => {
     req.context.me.inspiration = req.body.inspiration;
     req.context.me.passion = req.body.passion;
 
-    req.context.me.save(function (err) { console.error});
+    req.context.me.save(function (err) { console.error });
 
     return res.send();
 })
 
 connectDb()
     .then(async () => {
-        app.listen(process.env.PORT, () => {
+        app.listen(getPort(), () => {
             console.log(`listening on port ${process.env.PORT}`);
         });
     })
     .catch(console.error);
+
+function getPort() {
+    let port = process.env.PORT;
+    if (port == null || port == "") {
+        port = 8000;
+    }
+
+    return port;
+}
