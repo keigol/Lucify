@@ -45,7 +45,11 @@ app.get('/api/:vfid', async (req, res) => {
 // post dream
 app.post('/api/:vfid/dream', async (req, res) => {
     let user = req.context.me;
-    var dream = new models.Dream({ description: req.body.description });
+    var dream = new models.Dream({
+         description: req.body.description,
+         characters: req.body.characters,
+         places: req.body.places
+        });
     dream.save(function (err) {
         user.dreams.push(dream);
         user.save(function (err) { console.error });
