@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const dreamEntrySchema = new mongoose.Schema(
+const dreamSchema = new mongoose.Schema(
     {
         description: {
             type: String,
@@ -17,4 +17,4 @@ const dreamEntrySchema = new mongoose.Schema(
     }
 )
 
-module.exports = mongoose.model('DreamEntry', dreamEntrySchema);
+module.exports = mongoose.model('Dream', dreamSchema);

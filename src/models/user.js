@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema(
         },
         dreams: [{
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'DreamEntry'
+            ref: 'Dream'
         }],
 
         hobbies: String,
@@ -30,7 +30,7 @@ userSchema.statics.findByVoiceflowId = async function (id) {
 };
 
 userSchema.pre('remove', function (next) {
-    this.model('DreamEntry').deleteMany({ user: this._id }, next);
+    this.model('Dream').deleteMany({ user: this._id }, next);
 });
 
 module.exports = mongoose.model('User', userSchema);

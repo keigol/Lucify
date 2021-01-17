@@ -9,26 +9,45 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use( async (req, res, next) => {
+app.use('/api/:vfid', async (req, res, next) => {
+    let user = await models.User.findByVoiceflowId(req.params.vfid);
+
+    if (user == null) {
+        user = new models.User({ vfid: req.params.vfid });
+        user.save(function (err) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+        });
+        console.log('user created');
+    }
+
     req.context = {
         models,
-        me: await models.User.findByVoiceflowId(1)
+        me: user
     }
+
     next();
 })
 
-app.get('/api/:userId', async (req, res) => {
-    // const user = await req.context.models.User.findById(req.context.me.id);
-    return res.send(req.context.me);
+app.get('/api/:vfid', async (req, res) => {
+    models.User.findOne({_id: req.context.me.id})
+        .populate('dreams')
+        .then(user => {
+            res.json(user);
+        })
+    return;
 });
 
-app.post('/api/:userId', async (req, res) => {
+app.post('/api/:vfid/dream', async (req, res) => {
     let user = req.context.me;
-    var dreamEntry = new models.DreamEntry({description: 'I had a dream'});
-    dreamEntry.save(function(err) {
-        user.dreams.push(dreamEntry);
-        user.save(function(err) {console.error});
+    var dream = new models.Dream({ description: req.body.description });
+    dream.save(function (err) {
+        user.dreams.push(dream);
+        user.save(function (err) { console.error });
     })
+    console.log('dream saved');
 
     return res.send();
 })
