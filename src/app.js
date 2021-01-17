@@ -31,6 +31,8 @@ app.use('/api/:vfid', async (req, res, next) => {
     next();
 })
 
+
+// return dreams
 app.get('/api/:vfid', async (req, res) => {
     models.User.findOne({_id: req.context.me.id})
         .populate('dreams')
@@ -40,6 +42,7 @@ app.get('/api/:vfid', async (req, res) => {
     return;
 });
 
+// post dream
 app.post('/api/:vfid/dream', async (req, res) => {
     let user = req.context.me;
     var dream = new models.Dream({ description: req.body.description });
@@ -52,6 +55,17 @@ app.post('/api/:vfid/dream', async (req, res) => {
     return res.send();
 })
 
+// add starting fields
+app.post('/api/:vfid/init', async (req, res) => {
+    req.context.me.hobbies = req.body.hobbies;
+    req.context.me.goals = req.body.goals;
+    req.context.me.inspiration = req.body.inspiration;
+    req.context.me.passion = req.body.passion;
+
+    req.context.me.save(function (err) { console.error});
+
+    return res.send();
+})
 
 connectDb()
     .then(async () => {
